@@ -1,5 +1,5 @@
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "../../../firebase/config";
@@ -9,6 +9,7 @@ const Login = () => {
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
     const [showPassword,setShowPassword]=useState(false);
+    const location=useLocation();
     const navigate=useNavigate();
     const emailRef = useRef();
     const handleForgetPassword = () => {
@@ -46,7 +47,12 @@ const Login = () => {
                 const user=userCred.user;
                 if(user.emailVerified){
                     setLoading(false);
-                    navigate('/');
+                    if(location.state!=null){
+                        navigate(`${location.state}`);
+                    }
+                    else{
+                        navigate('/');
+                    }
                 }
                 else{
                     setError('Please verify your email before login.');
@@ -105,10 +111,15 @@ const Login = () => {
                             setLoading(true)
                             const provider= new GoogleAuthProvider();
                             signInWithPopup(auth,provider)
-                            .then((result)=>{
-                                console.log(result.user)
+                            .then(()=>{
                                 setLoading(false);
-                                navigate('/');
+                                if(location.state!=null){
+                                    navigate(`${location.state}`);
+
+                                }
+                                else{
+                                    navigate('/');
+                                }
                             })
                             .catch(()=>{
                                 setLoading(false);

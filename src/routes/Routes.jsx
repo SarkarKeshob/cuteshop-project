@@ -14,6 +14,8 @@ import AdminViewProducts from "../components/pages/Admin/AdminViewProducts/Admin
 import ChangeOrderStatus from "../components/pages/Admin/ChangeOrderStatus/ChangeOrderStatus";
 import AdminAddProducts from "../components/pages/Admin/AdminAddProducts/AdminAddProducts";
 import ProductDetails from "../components/pages/Home/HomeContent/Products/ProductDetails/ProductDetails"
+import Checkout from "../components/pages/Checkout/Checkout";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 const routes = createBrowserRouter([
     {
@@ -32,6 +34,10 @@ const routes = createBrowserRouter([
             {
                 path:'/productDetails/:id',
                 element:<ProductDetails></ProductDetails>
+            },
+            {
+                path:'/checkout',
+                element:<PrivateRoute><Checkout></Checkout></PrivateRoute>
             },
 
             {

@@ -43,10 +43,10 @@ const Register = () => {
                                 sendEmailVerification(user)
                                     .then(() => {
                                         setLoading(false);
-                                        e.terget.reset();
                                         navigate('/login');
                                     })
-                                    .catch(()=>{
+                                    .catch((err)=>{
+                                        console.log(err)
                                         setError('Something Wrong try registration again');
                                         setLoading(false);
                                     })

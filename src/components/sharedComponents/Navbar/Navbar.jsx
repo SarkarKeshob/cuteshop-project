@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveUser } from "../../../redux/features/AuthSlice/authSlice";
 import Loading from "../Loading/Loading";
+import { calculateTotalQuantityAndPrice } from "../../../redux/features/CartSlice/cartSlice";
 
 const Navbar = () => {
     const isImageValid=async(imageLink)=>{
@@ -18,6 +19,8 @@ const Navbar = () => {
         }
             
     }
+    const cartItemsQuantity=useSelector(state=>state.cart.cartItemsQuantity);
+    const cartItems=useSelector(state=>state.cart.cartItems);
 
     const active = 'text-orange-500 underline font-bold hover:text-accent flex items-center';
     const [loading, setLoading] = useState(false);
@@ -30,7 +33,7 @@ const Navbar = () => {
             <NavLink to={'/'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>Home</NavLink>
             <NavLink to={'/contact'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>Contact</NavLink>
             <NavLink to={'/orders'} className={({ isActive }) => isActive ?active : 'hover:text-accent'}>My Orders</NavLink>
-            <NavLink to={'/cart'} className={({ isActive }) => isActive ? active : 'hover:text-accent flex items-center'}> Cart <FaShoppingCart className="text-lg ml-1"></FaShoppingCart><span className="-mt-4 ml-1 text-sm font-bold">0</span> </NavLink> 
+            <NavLink to={'/cart'} className={({ isActive }) => isActive ? 'text-orange-500 font-bold hover:text-accent flex items-center' : 'hover:text-accent flex items-center'}> Cart <FaShoppingCart className="text-lg ml-1"></FaShoppingCart><span className="-mt-4 ml-1 text-sm font-bold no-underline">{cartItemsQuantity}</span> </NavLink> 
         </>
     )
 
@@ -45,7 +48,9 @@ const Navbar = () => {
                 setLoading(false);
             })
     }
-
+useEffect(()=>{
+    dispatch(calculateTotalQuantityAndPrice());
+},[dispatch,cartItems]);
     useEffect(() => {
         
         setLoading(true);
@@ -57,7 +62,7 @@ const Navbar = () => {
                     userImage=user.photoURL;
                 }
                 else{
-                    userImage='https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'
+                    userImage='https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1'
                 }
                 dispatch(setActiveUser({
                     userName: user.displayName,
@@ -73,6 +78,8 @@ const Navbar = () => {
                 dispatch(setActiveUser({}));
                 setLoading(false);
             }
+
+
         })
 
         return () => {
