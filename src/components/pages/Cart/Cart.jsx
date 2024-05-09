@@ -84,7 +84,7 @@ const Cart = () => {
                                 <p className="text-xl text-slate-500 mb-2">Cart Item(s)  <span>{cartQuantity}</span></p>
                                 <p className="text-xl md:text-2xl lg:text-4xl font-bold my-1 flex justify-between">Sub Total <span className="text-orange-500 my-1">$ {cartAmount}</span></p>
                                 <p className="text-lg text-slate-500 my-1">Taxes and Shipping charges are calculated at checkout  </p>
-                                <button className="btn btn-info w-full mt-2"><Link to={'/checkout'}>Checkout</Link></button>
+                                <Link className="btn btn-info w-full mt-2" to={'/checkoutDetails'}>Checkout</Link>
                             </div>
                         </div>
                     </>)}

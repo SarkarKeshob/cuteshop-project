@@ -16,7 +16,10 @@ import AdminAddProducts from "../components/pages/Admin/AdminAddProducts/AdminAd
 import ProductDetails from "../components/pages/Home/HomeContent/Products/ProductDetails/ProductDetails"
 import Checkout from "../components/pages/Checkout/Checkout";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
-
+import CheckoutDetails from "../components/pages/Checkout/CheckoutDetails";
+import CheckoutForm from "../components/pages/Checkout/CheckoutForm";
+import OrderDetails from "../components/pages/Orders/OrderDetails";
+import ReviewProducts from "../components/sharedComponents/ReviewProducts/ReviewProducts";
 const routes = createBrowserRouter([
     {
         path: '/',
@@ -32,12 +35,28 @@ const routes = createBrowserRouter([
                 element: <Orders></Orders>
             },
             {
+                path: '/orderDetails/:id',
+                element: <OrderDetails></OrderDetails>
+            },
+            {
                 path:'/productDetails/:id',
                 element:<ProductDetails></ProductDetails>
             },
             {
+                path:'/reviewProduct/:id',
+                element:<ReviewProducts></ReviewProducts>
+            },
+            {
                 path:'/checkout',
                 element:<PrivateRoute><Checkout></Checkout></PrivateRoute>
+            },
+            {
+                path:'/checkoutDetails',
+                element:<PrivateRoute><CheckoutDetails></CheckoutDetails></PrivateRoute>
+            },
+            {
+                path:'/checkoutForm',
+                element:<PrivateRoute><CheckoutForm></CheckoutForm></PrivateRoute>
             },
 
             {

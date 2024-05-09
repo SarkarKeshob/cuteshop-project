@@ -9,12 +9,12 @@ const AdminNavbar = () => {
     return (
         <div>
             {/* Admin Details */}
-            <div className="bg-blue-600 p-10">
-                <img src={adminImage} className="rounded-full mx-auto w-14 h-14" alt={adminName} />
-                <h2 className=" text-xl md:text-2xl text-center font-bold text-white">{adminName}</h2>
+            <div className="bg-blue-600 p-2 md:p-4 lg:p-10 ">
+                <img src={adminImage} className="rounded-full mx-auto w-[80%] h-[80%] md:w-[70%] md:h-[70%] lg:w-[50%] lg:h-[50%}" alt={adminName} />
+                <h2 className=" text-sm md:text-xl lg:text-2xl text-center font-bold text-white">{adminName}</h2>
             </div>
             {/* navbar */}
-            <div>
+            <div className="text-sm md:text-base lg:text-lg">
                 <div className="py-2 pl-2  border-b-2 grid">
                     <NavLink className={({ isActive }) => isActive ? active : ''} to={'/admin/home'}>Home</NavLink>
                 </div>

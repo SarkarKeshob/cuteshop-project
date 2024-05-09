@@ -1,20 +1,33 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import { Navigate, useLocation } from "react-router-dom";
+import Loading from "../../components/sharedComponents/Loading/Loading";
+
+import { useEffect } from "react";
+import { fetchUser } from "../../redux/features/AuthSlice/authSlice";
 
 const PrivateRoute = ({ children }) => {
     const location=useLocation().pathname;
-    console.log(location);
+    const dispatch=useDispatch()
+     useEffect(() => {
+        dispatch(fetchUser())
+    }, [dispatch])
     const validUser = useSelector(state => state.activeUser.user);
-    if (validUser.isEmailVerified) {
-        return (
-            children
-        );
+    const loadingCondition=useSelector(state=>state.activeUser.loading);
+    if(loadingCondition){
+        return <Loading></Loading>
     }
     else{
-        return(
-            <Navigate state={location} to={'/login'}></Navigate>
-        )
+        if (validUser.isEmailVerified) {
+            return (
+                children
+            );
+        }
+        else{
+            return(
+                <Navigate state={location} to={'/login'}></Navigate>
+            )
+        }
     }
 
 }

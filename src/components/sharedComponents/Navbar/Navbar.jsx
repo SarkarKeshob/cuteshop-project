@@ -1,95 +1,46 @@
 import { Link, NavLink } from "react-router-dom";
 import { FaShopify, FaShoppingCart } from "react-icons/fa";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../../../firebase/config";
-import { useEffect, useState } from "react";
+import { useEffect, } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveUser } from "../../../redux/features/AuthSlice/authSlice";
+import { fetchUser, logOutUser, } from "../../../redux/features/AuthSlice/authSlice";
 import Loading from "../Loading/Loading";
 import { calculateTotalQuantityAndPrice } from "../../../redux/features/CartSlice/cartSlice";
 
 const Navbar = () => {
-    const isImageValid=async(imageLink)=>{
-        try{
-            await fetch (`${imageLink}`);
-            return true;
-        }
-        catch{
-            return false
-        }
-            
-    }
-    const cartItemsQuantity=useSelector(state=>state.cart.cartItemsQuantity);
-    const cartItems=useSelector(state=>state.cart.cartItems);
+
+    const cartItemsQuantity = useSelector(state => state.cart.cartItemsQuantity);
+    const cartItems = useSelector(state => state.cart.cartItems);
 
     const active = 'text-orange-500 underline font-bold hover:text-accent flex items-center';
-    const [loading, setLoading] = useState(false);
 
     const activeUser = useSelector(state => state.activeUser.user);
+    const loadCondition = useSelector(state => state.activeUser.loading);
     const dispatch = useDispatch();
 
     const navLinks = (
         <>
             <NavLink to={'/'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>Home</NavLink>
             <NavLink to={'/contact'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>Contact</NavLink>
-            <NavLink to={'/orders'} className={({ isActive }) => isActive ?active : 'hover:text-accent'}>My Orders</NavLink>
-            <NavLink to={'/cart'} className={({ isActive }) => isActive ? 'text-orange-500 font-bold hover:text-accent flex items-center' : 'hover:text-accent flex items-center'}> Cart <FaShoppingCart className="text-lg ml-1"></FaShoppingCart><span className="-mt-4 ml-1 text-sm font-bold no-underline">{cartItemsQuantity}</span> </NavLink> 
+            <NavLink to={'/orders'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>My Orders</NavLink>
+            <NavLink to={'/cart'} className={({ isActive }) => isActive ? 'text-orange-500 font-bold hover:text-accent flex items-center' : 'hover:text-accent flex items-center'}> Cart <FaShoppingCart className="text-lg ml-1"></FaShoppingCart><span className="-mt-4 ml-1 text-sm font-bold no-underline">{cartItemsQuantity}</span> </NavLink>
         </>
     )
 
 
     const handleLogout = () => {
-        setLoading(true);
-        signOut(auth)
-            .then(() => {
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            })
+        dispatch(logOutUser())
     }
-useEffect(()=>{
-    dispatch(calculateTotalQuantityAndPrice());
-},[dispatch,cartItems]);
     useEffect(() => {
-        
-        setLoading(true);
-        const unSubscribe = onAuthStateChanged(auth, (user) => {
-            if (user?.emailVerified) {
-                const imageValidity=isImageValid(user.photoURL);
-                let userImage='';
-                if(imageValidity){
-                    userImage=user.photoURL;
-                }
-                else{
-                    userImage='https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1'
-                }
-                dispatch(setActiveUser({
-                    userName: user.displayName,
-                    userEmail: user.email,
-                    isEmailVerified: user.emailVerified,
-                    userImage: userImage,
-                    userId: user.uid,
-                }));
-                setLoading(false);
+        dispatch(calculateTotalQuantityAndPrice());
+    }, [dispatch, cartItems]);
+    useEffect(() => {
+        dispatch(fetchUser());
 
-            }
-            else {
-                dispatch(setActiveUser({}));
-                setLoading(false);
-            }
-
-
-        })
-
-        return () => {
-            unSubscribe();
-        }
 
     }, [dispatch]);
     return (
         <div className="static sticky top-0 z-50">
-            {loading && <Loading></Loading> }
+            {loadCondition && <Loading></Loading>}
             <div className="navbar bg-cyan-950 text-white grid md:grid-cols-2 lg:grid-cols-8 items-center py-5 px-4">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -114,8 +65,8 @@ useEffect(()=>{
                     <div>
                         {(activeUser?.userName) ? <h2>Welcome <span className="text-orange-500 text-sm">{activeUser.userName}</span></h2> : ''}
                     </div>
-                    <div>{activeUser?.userEmail=='keshob.sarkar.shuvo@gmail.com'?<Link className="btn btn-info" to={'/admin'}>Admin</Link>:''}</div>
-                    <div>{activeUser?.userEmail? <button className="btn btn-accent" onClick={handleLogout}>Logout</button> : <Link className="btn btn-warning" to={'/login'}>Login</Link>}</div>
+                    <div>{activeUser?.userEmail == 'keshob.sarkar.shuvo@gmail.com' ? <Link className="btn btn-info" to={'/admin'}>Admin</Link> : ''}</div>
+                    <div>{activeUser?.userEmail ? <button className="btn btn-accent" onClick={handleLogout}>Logout</button> : <Link className="btn btn-warning" to={'/login'}>Login</Link>}</div>
 
                 </div>
 

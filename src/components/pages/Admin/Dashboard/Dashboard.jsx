@@ -12,7 +12,7 @@ const Dashboard = () => {
     else{
         navigate(`${location.pathname}`)
     }
-    },[])
+    },[location.pathname,navigate])
     return (
         <div className="grid grid-cols-8 gap-10">
             <div className="col-span-2">
