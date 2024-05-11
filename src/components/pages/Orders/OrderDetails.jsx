@@ -33,7 +33,7 @@ const OrderDetails = () => {
                     <p className="font-bold text-slate-800">Order Id: <span className="text-slate-500 font-medium">{id}</span></p>
                     <p className="font-bold text-slate-800">Ordered on: <span className="text-slate-500 font-medium">{order.orderDate}</span></p>
                     <p className="font-bold text-slate-800">Paid Amount: <span className="text-slate-500 font-medium">$ {order.orderAmount}</span></p>
-                    <p className="font-bold text-slate-800">Order Stattus: <span className="text-slate-500 font-medium">{order.orderStatus}</span></p>
+                    <p className="font-bold text-slate-800">Order Status: <span className="text-slate-500 font-medium">{order.orderStatus}</span></p>
                 </div>
                 <div className="overflow-x-auto mt-8">
                     <table className="table table-sm max-w-full">

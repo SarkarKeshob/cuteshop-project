@@ -20,7 +20,7 @@ const Navbar = () => {
     const navLinks = (
         <>
             <NavLink to={'/'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>Home</NavLink>
-            <NavLink to={'/contact'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>Contact</NavLink>
+            <NavLink to={'/contact'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>Contact Me</NavLink>
             <NavLink to={'/orders'} className={({ isActive }) => isActive ? active : 'hover:text-accent'}>My Orders</NavLink>
             <NavLink to={'/cart'} className={({ isActive }) => isActive ? 'text-orange-500 font-bold hover:text-accent flex items-center' : 'hover:text-accent flex items-center'}> Cart <FaShoppingCart className="text-lg ml-1"></FaShoppingCart><span className="-mt-4 ml-1 text-sm font-bold no-underline">{cartItemsQuantity}</span> </NavLink>
         </>

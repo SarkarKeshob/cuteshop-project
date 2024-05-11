@@ -1,10 +1,9 @@
-import { useContext, useEffect } from "react";
-import { ProductContext } from "../../Products";
-import { useSelector } from "react-redux";
+import {  useEffect } from "react";
+import PropTypes from 'prop-types';
 
-const Pagination = () => {
-    const { currentPage, setCurrentPage, productsPerPage, setPaginatedProducts } = useContext(ProductContext);
-    const filteredProducts = useSelector(state => state.filter.filteredProducts);
+
+const Pagination = ({value}) => {
+    const { currentPage, setCurrentPage, productsPerPage, setPaginatedProducts,filteredProducts } = value;
     const numberOfProducts = filteredProducts.length;
     const numberOfPages = Math.ceil(numberOfProducts / productsPerPage);
     const paginationNumber = [];
@@ -49,5 +48,7 @@ const Pagination = () => {
         </div>
     );
 };
-
+Pagination.propTypes={
+    value:PropTypes.object
+}
 export default Pagination;

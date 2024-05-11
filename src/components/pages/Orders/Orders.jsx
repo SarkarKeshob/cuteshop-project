@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import useFetchCollection from "../../../CustomHooks/fetchCollectionHook";
-import { orders, saveOrders } from "../../../redux/features/OrderSlice/orderSlice";
+import { saveOrders, selectOrders } from "../../../redux/features/OrderSlice/orderSlice";
 import { useEffect } from "react";
 import Loading from "../../sharedComponents/Loading/Loading";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Orders = () => {
     const dispatch = useDispatch();
     const { data, isLoading } = useFetchCollection('orders');
-    const ordersData = useSelector(orders);
+    const ordersData = useSelector(selectOrders);
     const userId = useSelector(state => state.activeUser.user.uid);
     const navigate=useNavigate();
 

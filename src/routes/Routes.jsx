@@ -20,6 +20,8 @@ import CheckoutDetails from "../components/pages/Checkout/CheckoutDetails";
 import CheckoutForm from "../components/pages/Checkout/CheckoutForm";
 import OrderDetails from "../components/pages/Orders/OrderDetails";
 import ReviewProducts from "../components/sharedComponents/ReviewProducts/ReviewProducts";
+import AdminOnlyRoutes from "./AdminOnlyRoutes/AdminOnlyRoutes";
+import ContactMe from "../components/pages/Contactme/ContactMe";
 const routes = createBrowserRouter([
     {
         path: '/',
@@ -58,6 +60,10 @@ const routes = createBrowserRouter([
                 path:'/checkoutForm',
                 element:<PrivateRoute><CheckoutForm></CheckoutForm></PrivateRoute>
             },
+            {
+                path:'/contact',
+                element:<PrivateRoute><ContactMe></ContactMe></PrivateRoute>
+            },
 
             {
                 path: '/cart',
@@ -65,27 +71,27 @@ const routes = createBrowserRouter([
             },
             {
                 path: '/admin',
-                element: <Dashboard></Dashboard>,
+                element: <AdminOnlyRoutes><Dashboard></Dashboard></AdminOnlyRoutes>,
                 children: [
                     {
                         path: '/admin/home',
-                        element: <AdminHome></AdminHome>
+                        element: <AdminOnlyRoutes><AdminHome></AdminHome></AdminOnlyRoutes>
                     },
                     {
                         path: '/admin/addProducts/:pageKey',
-                        element: <AdminAddProducts></AdminAddProducts>
+                        element: <AdminOnlyRoutes><AdminAddProducts></AdminAddProducts></AdminOnlyRoutes>
                     },
                     {
-                        path: '/admin/orderDetails',
-                        element: <AdminOrderDetails></AdminOrderDetails>
+                        path: '/admin/orderDetails/:id',
+                        element: <AdminOnlyRoutes><AdminOrderDetails></AdminOrderDetails></AdminOnlyRoutes>
                     },
                     {
                         path: '/admin/orders',
-                        element: <AdminOrders></AdminOrders>
+                        element: <AdminOnlyRoutes><AdminOrders></AdminOrders></AdminOnlyRoutes>
                     },
                     {
                         path: '/admin/viewProducts',
-                        element: <AdminViewProducts></AdminViewProducts>
+                        element: <AdminOnlyRoutes><AdminViewProducts></AdminViewProducts></AdminOnlyRoutes>
                     },
                     {
                         path: '/admin/changeOrderStatus',

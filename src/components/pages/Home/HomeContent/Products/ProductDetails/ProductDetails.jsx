@@ -16,9 +16,8 @@ const ProductDetails = () => {
     useEffect(()=>{
         setSelectedProduct({...selectedData});
     },[selectedData]);
-    
 
-    const isInCart=cart.find(item=>item.id==selectedProduct.id);
+    const isInCart=cart.find(item=>item?.id==selectedProduct?.id);
     const addProductToCart=(productItem)=>{
         dispatch(addToCart(productItem));
         dispatch(calculateTotalQuantityAndPrice());

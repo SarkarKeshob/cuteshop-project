@@ -10,7 +10,7 @@ import Pagination from "./Pagination/Pagination";
 import ProductItem from "../ProductItem/ProductItem";
 
 const ProductList = () => {
-    const { grid, setGrid,setSortKey,sortKey,searchKey,brand,category,price,paginatedProducts,setCurrentPage} = useContext(ProductContext)
+    const { grid, setGrid,setSortKey,sortKey,searchKey,setSearchKey,brand,category,price,paginatedProducts,setCurrentPage,currentPage,productsPerPage,setPaginatedProducts} = useContext(ProductContext)
     const products = useSelector(state => state.products.products);
     const filteredProducts=useSelector(state=>state.filter.filteredProducts);
     const dispatch=useDispatch();
@@ -53,7 +53,7 @@ const ProductList = () => {
                 </div>
 
                 <div>
-                    <Search></Search>
+                    <Search value={{setSearchKey,setCurrentPage}}></Search>
                 </div>
 
                 <div>
@@ -78,7 +78,7 @@ const ProductList = () => {
 
             </div>
             <div className="border-t-2 border-slate-300 pt-4 mt-10">
-                {filteredProducts.length>0 && <Pagination></Pagination>}
+                {filteredProducts.length>0 && <Pagination value={{ currentPage, setCurrentPage, productsPerPage, setPaginatedProducts,filteredProducts }}></Pagination>}
             </div>
         </div>
     );

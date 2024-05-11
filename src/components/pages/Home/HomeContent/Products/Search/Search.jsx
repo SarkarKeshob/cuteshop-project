@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { ProductContext } from "../Products";
 import { FaSearch } from "react-icons/fa";
-
-const Search = () => {
-    const{setSearchKey,setCurrentPage}=useContext(ProductContext);
+import PropTypes from 'prop-types';
+const Search = ({value}) => {
+    const {setSearchKey,setCurrentPage}=value;
     return (
         <>
             <div className="flex items-center">
@@ -17,5 +15,7 @@ const Search = () => {
         </>
     );
 };
-
+Search.propTypes={
+    value:PropTypes.object
+}
 export default Search;

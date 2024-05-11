@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 const InfoBox = ({ value }) => {
     const { title, borderStyle, count, icon } = { ...value }
-    console.log(value)
     return (
         <div>
             <div className={`card bg-white shadow-xl ${borderStyle}`}>
