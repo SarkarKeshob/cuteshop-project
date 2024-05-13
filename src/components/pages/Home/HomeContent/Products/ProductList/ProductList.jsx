@@ -4,42 +4,27 @@ import { FaListAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductContext } from "../Products";
 import Search from "../Search/Search";
-import { filterByBrands, filterByCategory, filterByPrice, filterBySearch, sortProducts } from "../../../../../../redux/features/FilterSlice/filterSlice";
-import { getPriceRange } from "../../../../../../redux/features/ProductSlice/productSlice";
 import Pagination from "./Pagination/Pagination";
 import ProductItem from "../ProductItem/ProductItem";
+import { filterProducts } from "../../../../../../redux/features/FilterSlice/filterSlice";
+import { getPriceRange } from "../../../../../../redux/features/ProductSlice/productSlice";
 
 const ProductList = () => {
-    const { grid, setGrid,setSortKey,sortKey,searchKey,setSearchKey,brand,category,price,paginatedProducts,setCurrentPage,currentPage,productsPerPage,setPaginatedProducts} = useContext(ProductContext)
+    const { grid, setGrid,paginatedProducts,setCurrentPage,currentPage,productsPerPage,setPaginatedProducts,filter,setFilter} = useContext(ProductContext)
     const products = useSelector(state => state.products.products);
     const filteredProducts=useSelector(state=>state.filter.filteredProducts);
     const dispatch=useDispatch();
-
-    
-    
     useEffect(()=>{
-        dispatch(sortProducts({products,sortKey}));
-    },[dispatch,products,sortKey])
-
-    useEffect(()=>{
-        dispatch(filterBySearch({products,searchKey}))
-    },[dispatch,products,searchKey]);
-    useEffect(()=>{
-        dispatch(filterByBrands({products,brand}))
-    },[dispatch,products,brand]);
-    useEffect(()=>{
-        dispatch(filterByCategory({products,category}))
-    },[dispatch,products,category]);
-    useEffect(()=>{
-        dispatch(filterByPrice({products,price}))
-    },[dispatch,products,price]);
-
-    useEffect(()=>{
+        dispatch(filterProducts({products,filter}));
         dispatch(getPriceRange({products}))
-    },[dispatch,products])
+    },[dispatch,products,filter])
 
     const gridClass = "grid gap-10 md:grid-cols-2  lg:grid-cols-3 mt-8";
     const listClass = "grid gap-5 mx-auto mt-8";
+    const  handleSortChange=(value)=>{
+        setFilter({...filter,sortKey:value})
+        setCurrentPage(1);
+    }
     return (
         <div>
 
@@ -53,15 +38,12 @@ const ProductList = () => {
                 </div>
 
                 <div>
-                    <Search value={{setSearchKey,setCurrentPage}}></Search>
+                    <Search></Search>
                 </div>
 
                 <div>
                     <label htmlFor="sortBy">Sort By:</label>
-                    <select name="" id="sortBy" className="bg-slate-100 outline-none" onChange={(e)=>{
-                        setSortKey(e.target.value);
-                        setCurrentPage(1);
-                        }}>
+                    <select name="" id="sortBy" className="bg-slate-100 outline-none" onChange={(e)=>{handleSortChange(e.target.value)}}>
                         <option value="latest">Latest</option>
                         <option value="lowest">Lowest-price</option>
                         <option value="highest">Highest-price</option>

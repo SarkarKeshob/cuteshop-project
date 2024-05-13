@@ -8,7 +8,7 @@ export const productSlice=createSlice({
         minPrice:null,
     },
     reducers:{
-        setProducts:(state,action)=>{
+        saveProducts:(state,action)=>{
             state.products=action.payload;
         },
         getPriceRange:(state,action)=>{
@@ -21,5 +21,5 @@ export const productSlice=createSlice({
     }
 });
 
-export const {setProducts,getPriceRange}=productSlice.actions;
+export const {saveProducts,getPriceRange}=productSlice.actions;
 export default productSlice.reducer;

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { calculateTotalOrders, saveOrders, selectOrders, selectTotalOrderAmount } from "../../../../redux/features/OrderSlice/orderSlice";
 import useFetchCollection from "../../../../CustomHooks/fetchCollectionHook";
 import { useEffect } from "react";
-import { setProducts } from "../../../../redux/features/ProductSlice/productSlice";
+import { saveProducts } from "../../../../redux/features/ProductSlice/productSlice";
 import Loading from "../../../sharedComponents/Loading/Loading";
 import Chart from "./Chart/Chart";
 
@@ -17,13 +17,11 @@ const AdminHome = () => {
     const dispatch = useDispatch();
     const products = useFetchCollection('products');
     const orders = useFetchCollection('orders');
-    console.log(order);
     useEffect(() => {
         dispatch(saveOrders(orders.data));
-        dispatch(setProducts(products.data));
+        dispatch(saveProducts(products.data));
         dispatch(calculateTotalOrders());
     }, [dispatch, orders.data, products.data])
-    console.log(earning);
     const earningIcon = (<AiFillDollarCircle size={30} className="text-purple-600"></AiFillDollarCircle>);
     const productIcon = (<RiLuggageCartLine size={30} className="text-sky-500" />);
     const orderIcon = (<FaCartArrowDown size={30} className="text-orange-600" />)

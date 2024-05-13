@@ -7,11 +7,11 @@ import { db, storage } from "../../../../firebase/config";
 import { deleteObject, ref } from "firebase/storage";
 import Notiflix from "notiflix";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../../../../redux/features/ProductSlice/productSlice";
+import { saveProducts } from "../../../../redux/features/ProductSlice/productSlice";
 import useFetchCollection from "../../../../CustomHooks/fetchCollectionHook";
 import { filterBySearch } from "../../../../redux/features/FilterSlice/filterSlice";
-import Search from "../../Home/HomeContent/Products/Search/Search";
 import Pagination from "../../Home/HomeContent/Products/ProductList/Pagination/Pagination";
+import AdminSearch from "../AdminSearch/AdminSearch";
 
 const AdminViewProducts = () => {
     const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ const AdminViewProducts = () => {
     const productsPerPage=5;
 
     useEffect(() => {
-        dispatch(setProducts(data))
+        dispatch(saveProducts(data))
         setLoading(isLoading);
         setError(isError)
     }, [data, dispatch, isLoading, isError]);
@@ -80,7 +80,7 @@ const AdminViewProducts = () => {
             <div className="overflow-x-auto ">
                 <h2 className="text-xl mt-8 w-fit mx-auto font-bold border-b-2 p-3">All Products</h2>
                 <div className="mb-10 mt-3 w-1/4 mx-auto">
-                    <Search value={{ setSearchKey, setCurrentPage }}></Search>
+                    <AdminSearch value={{ setSearchKey, setCurrentPage }}></AdminSearch>
                 </div>
                 {paginatedProducts.length == 0 ? <p className="text-center text-lg mt-5 ">No Products found</p> : (
                     <div className="overflow-x-auto">

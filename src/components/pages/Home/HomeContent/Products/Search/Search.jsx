@@ -1,21 +1,20 @@
+import { useContext } from "react";
 import { FaSearch } from "react-icons/fa";
-import PropTypes from 'prop-types';
-const Search = ({value}) => {
-    const {setSearchKey,setCurrentPage}=value;
+import { ProductContext } from "../Products";
+const Search = () => {
+    const {filter,setFilter,setCurrentPage}=useContext(ProductContext)
+    const handleSearchChange=(value)=>{
+        setFilter({...filter,searchKey:value});
+        setCurrentPage(1)
+    }
     return (
         <>
             <div className="flex items-center">
-                <input type="text" onChange={(e)=>{
-                    setSearchKey(e.target.value)
-                    setCurrentPage(1)
-                }} className="input input-bordered" placeholder="Search Products Here" />
+                <input type="text" onChange={(e)=>{handleSearchChange(e.target.value)}} className="input input-bordered" placeholder="Search Products Here" />
               <span className="-ml-8 "><FaSearch></FaSearch></span>  
             </div>
             
         </>
     );
 };
-Search.propTypes={
-    value:PropTypes.object
-}
 export default Search;
