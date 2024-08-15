@@ -13,8 +13,7 @@ Welcome to the CuteShop E-Commerce Website! This is a fully functional e-commerc
 ## Technologies Used
 
 - **Frontend:** React, Redux Toolkit, Tailwind CSS
-- **Backend:** Node.js (for integration, if applicable)
-- **APIs:** Custom APIs for product and order management
+- **Backend:** Firebase
 
 ## Installation
 
